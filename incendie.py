@@ -23,3 +23,12 @@ DUREE_FEU =
 
 # Programme principal contenant la définition des widgets et des 
 # événements qui leur sont liés et l’appel à la boule de gestion des événements
+
+Bouton_terrain = tk.Button(root, command=pass)
+Bouton_save = tk.Button(root, command=pass)
+Bouton_load = tk.Button(root, command=pass)
+Bouton_step = tk.Button(root, command=pass)
+Bouton_start = tk.Button(root, command=pass)
+Bouton_stop = tk.Butoon(root, command=pass)
+Bouton_speedup = tk.Butoon(root, command=pass)
+Bouton_speeddown = tk.Butoon(root, command=pass)
