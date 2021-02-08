@@ -23,12 +23,17 @@ COULEURS = ["blue", "red", "green", "yellow", "black", "gray50"]
 
 
 # Définition des fonctions
+<<<<<<< HEAD
 def nouvelle_etape():
     pass
+=======
+
+>>>>>>> 6201ab9f3b3d0175929bf0c624149d85b138249f
 
 
 # Programme principal contenant la définition des widgets et des 
 # événements qui leur sont liés et l’appel à la boule de gestion des événements
+<<<<<<< HEAD
 racine = tk.Tk()
 racine.title("Propagation d'un incendie")
 terrain = tk.Canvas(racine, width=600, height=400, bg="black")
@@ -40,6 +45,17 @@ Bouton_start = tk.Button(racine, text="Start")
 Bouton_stop = tk.Button(racine, text="Stop")
 Bouton_speedup = tk.Button(racine, text="Speedup")
 Bouton_speeddown = tk.Button(racine, text="Slowdown")
+=======
+
+Bouton_terrain = tk.Button(root, command=pass)
+Bouton_save = tk.Button(root, command=pass)
+Bouton_load = tk.Button(root, command=pass)
+Bouton_step = tk.Button(root, command=pass)
+Bouton_start = tk.Button(root, command=pass)
+Bouton_stop = tk.Butoon(root, command=pass)
+Bouton_speedup = tk.Butoon(root, command=pass)
+Bouton_speeddown = tk.Butoon(root, command=pass)
+>>>>>>> 6201ab9f3b3d0175929bf0c624149d85b138249f
 
 Bouton_terrain.grid(row=0, column=0)
 Bouton_save.grid(row=0, column=1)
