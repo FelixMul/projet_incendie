@@ -8,17 +8,25 @@
 #########################################
 
 #import des librairies
-
+import tkinter as tk
+import random
 
 
 # Définition des constantes 
 DUREE_FEU = 
-
+DUREE_CENDRE =
+LARGEUER = 
+HAUTEUR =
+COULEURS = ["blue", "red", "green", "yellow", "black", "gray50"]
 
 # Définition des variables globales
 
 
 # Définition des fonctions
+def nouvelle_etape():
+    for i in range(HAUTEUR):
+        for j in range(LARGEUER):
+            if 
 
 
 # Programme principal contenant la définition des widgets et des 
