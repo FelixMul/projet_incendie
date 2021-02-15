@@ -15,29 +15,47 @@ import random as rd
 # Définition des constantes 
 DUREE_FEU = 0
 DUREE_CENDRE = 0
-LARGEUER = 600
-HAUTEUR = 400
+LARGEUR = 600
+HAUTEUR = 600
 COULEURS = ["blue", "red", "green", "yellow", "black", "gray50"]
+TAILLE_CARRE = 25
 
 # Définition des variables globales
-
+Value = {}
 
 # Définition des fonctions
-<<<<<<< HEAD
 def nouvelle_etape():
     pass
-=======
 
->>>>>>> 6201ab9f3b3d0175929bf0c624149d85b138249f
+def gen_terrain():
+    terrain.delete("all")
+    for i in range(1, LARGEUR, int(LARGEUR/TAILLE_CARRE)):
+        for j in range(1, HAUTEUR, int(HAUTEUR/TAILLE_CARRE)):
+            Value[i, j] = rd.randint(1, 3)
+    
+            if Value[i, j] == 1:
+                        terrain.create_rectangle(i, j, i+TAILLE_CARRE, j+TAILLE_CARRE, fill="blue")
+            elif Value[i, j] == 2:
+                        terrain.create_rectangle(i, j, i+TAILLE_CARRE, j+TAILLE_CARRE, fill="green")
+            elif Value[i, j] == 3:
+                        terrain.create_rectangle(i, j, i+TAILLE_CARRE, j+TAILLE_CARRE, fill="yellow")
 
 
 # Programme principal contenant la définition des widgets et des 
 # événements qui leur sont liés et l’appel à la boule de gestion des événements
-<<<<<<< HEAD
+
+### La variable Value permet de définir l'état d'une cellule selon ses coordonées :
+# 1 = Eau
+# 2 = Forêt
+# 3 = Prairie
+# 4 = Feu
+# 5 = Cendres tièdes
+# 6 = Cendres éteintes
+
 racine = tk.Tk()
 racine.title("Propagation d'un incendie")
-terrain = tk.Canvas(racine, width=600, height=400, bg="black")
-Bouton_terrain = tk.Button(racine, text="Terrain")
+terrain = tk.Canvas(racine, width=LARGEUR, height=HAUTEUR, bg="black")
+Bouton_terrain = tk.Button(racine, text="Generate Terrain", command=gen_terrain)
 Bouton_save = tk.Button(racine, text="Save")
 Bouton_load = tk.Button(racine, text="Load")
 Bouton_step = tk.Button(racine, text="Step")
@@ -45,17 +63,6 @@ Bouton_start = tk.Button(racine, text="Start")
 Bouton_stop = tk.Button(racine, text="Stop")
 Bouton_speedup = tk.Button(racine, text="Speedup")
 Bouton_speeddown = tk.Button(racine, text="Slowdown")
-=======
-
-Bouton_terrain = tk.Button(root, command=pass)
-Bouton_save = tk.Button(root, command=pass)
-Bouton_load = tk.Button(root, command=pass)
-Bouton_step = tk.Button(root, command=pass)
-Bouton_start = tk.Button(root, command=pass)
-Bouton_stop = tk.Butoon(root, command=pass)
-Bouton_speedup = tk.Butoon(root, command=pass)
-Bouton_speeddown = tk.Butoon(root, command=pass)
->>>>>>> 6201ab9f3b3d0175929bf0c624149d85b138249f
 
 Bouton_terrain.grid(row=0, column=0)
 Bouton_save.grid(row=0, column=1)
@@ -66,5 +73,6 @@ Bouton_stop.grid(row=1, column=4)
 Bouton_speedup.grid(row=2, column=4)
 Bouton_speeddown.grid(row=3, column=4)
 terrain.grid(row=1, column=0, columnspan=4, rowspan=3)
+
 
 racine.mainloop()
