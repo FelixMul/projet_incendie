@@ -16,9 +16,9 @@ import random as rd
 DUREE_FEU = 0
 DUREE_CENDRE = 0
 LARGEUR = 600
-HAUTEUR = 600
+HAUTEUR = 400
 COULEURS = ["blue", "red", "green", "yellow", "black", "gray50"]
-TAILLE_CARRE = 25
+TAILLE_CARRE = 20
 
 # Définition des variables globales
 Value = {}
@@ -29,8 +29,8 @@ def nouvelle_etape():
 
 def gen_terrain():
     terrain.delete("all")
-    for i in range(1, LARGEUR, int(LARGEUR/TAILLE_CARRE)):
-        for j in range(1, HAUTEUR, int(HAUTEUR/TAILLE_CARRE)):
+    for i in range(1, LARGEUR, TAILLE_CARRE):
+        for j in range(1, HAUTEUR, TAILLE_CARRE):
             Value[i, j] = rd.randint(1, 3)
     
             if Value[i, j] == 1:
