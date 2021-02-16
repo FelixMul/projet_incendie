@@ -47,6 +47,8 @@ def clic_feu(event):
 def gen_terrain():
     """Fonction permettant de générer le terrain. La liste Cells contient les coordonnées de chaques cellules ainsi que leurs couleurs respective"""
 
+    global Cells
+    Cells = []
     terrain.delete("all")
 
     for i in range(1, LARGEUR, TAILLE_CARRE):
