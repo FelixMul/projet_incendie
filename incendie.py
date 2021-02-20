@@ -28,7 +28,44 @@ Cells = []
 
 # Définition des fonctions
 def nouvelle_etape():
-    pass
+    # Fonction permettant de passer a une nouvelle etape
+    global Cells
+    Cells_step = Cells
+    for n in range(len(Cells)):#les carres de bords ne peuvent pas prendre feu
+        if n > (HAUTEUR / TAILLE_CARRE) and n < (HAUTEUR * LARGEUR - HAUTEUR / TAILLE_CARRE) and n % (HAUTEUR / TAILLE_CARRE) != 0 and (n + 1) % (HAUTEUR / TAILLE_CARRE) != 0: 
+            if Cells[n][2] == "green":
+                b = 0
+                for m in range(n - 1 - int(HAUTEUR / TAILLE_CARRE), n + 2 - int(HAUTEUR / TAILLE_CARRE)):
+                    if Cells[m][2] == "red":
+                        b += 0.1
+                for m in range(n - 1 + int(HAUTEUR / TAILLE_CARRE), n + 2 + int(HAUTEUR / TAILLE_CARRE)):
+                    if m < len(Cells):
+                        if Cells[m][2] == "red":
+                            b += 0.1
+                if Cells[n - 1][2] == "red":
+                    b += 0.1
+                if Cells[n + 1][2] == "red":#on regarde la couleur de chaque parcelle au tour de Cells[n]
+                    b += 0.1
+                a = rd.random()
+                if a < b:
+                    #une parcelle de forêt prend feu avec la probabilité 0.1 × nf 
+                    Cells_step[n][2] = "red"
+                terrain.create_rectangle(Cells[n][0], Cells[n][1], Cells[n][0]+TAILLE_CARRE, Cells[n][1]+TAILLE_CARRE, fill = Cells_step[n][2])
+            elif Cells[n][2] == "yellow":
+                for m in range(n - 1 - int(HAUTEUR / TAILLE_CARRE), n + 2 - int(HAUTEUR / TAILLE_CARRE)):
+                    if Cells[m][2] == "red":
+                        Cells_step[n][2] = "red"
+                for m in range(n - 1 + int(HAUTEUR / TAILLE_CARRE), n + 2 + int(HAUTEUR / TAILLE_CARRE)):
+                    if m < len(Cells):
+                        if Cells[m][2] == "red":
+                            Cells_step[n][2] = "red"
+                if Cells[n - 1][2] == "red":
+                    Cells_step[n][2] = "red"
+                if Cells[n + 1][2] == "red":
+                    Cells_step[n][2] = "red"
+                terrain.create_rectangle(Cells[n][0], Cells[n][1], Cells[n][0]+TAILLE_CARRE, Cells[n][1]+TAILLE_CARRE, fill=Cells_step[n][2])
+    Cells = Cells_step
+
 
 def clic_feu(event):
     """Fonction permettant de créer une cellule de feu à l'endroit ou la souris se situe avec un clic gauche"""
