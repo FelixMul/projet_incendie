@@ -25,46 +25,36 @@ Cells = []
 
 ### Cells est la liste qui contient les coordonées et la couleur de chaque cellules sous la forme [x, y, "color"]
 
+###  Définition des fonctions
 
-# Définition des fonctions
 def nouvelle_etape():
     # Fonction permettant de passer a une nouvelle etape
     global Cells
     Cells_step = Cells
-    for n in range(len(Cells)):#les carres de bords ne peuvent pas prendre feu
-        if n > (HAUTEUR / TAILLE_CARRE) and n < (HAUTEUR * LARGEUR - HAUTEUR / TAILLE_CARRE) and n % (HAUTEUR / TAILLE_CARRE) != 0 and (n + 1) % (HAUTEUR / TAILLE_CARRE) != 0: 
-            if Cells[n][2] == "green":
+    for n in Cells:#les parcelles de bords ne peuvent pas prendre feu
+        if n[0] != 1 and n[1] != 1 and n[0] != LARGEUR + 1 - COTE and n[1] != HAUTEUR + 1 - COTE:
+            if n[2] == "green":
                 b = 0
-                for m in range(n - 1 - int(HAUTEUR / TAILLE_CARRE), n + 2 - int(HAUTEUR / TAILLE_CARRE)):
-                    if Cells[m][2] == "red":
-                        b += 0.1
-                for m in range(n - 1 + int(HAUTEUR / TAILLE_CARRE), n + 2 + int(HAUTEUR / TAILLE_CARRE)):
-                    if m < len(Cells):
-                        if Cells[m][2] == "red":
-                            b += 0.1
-                if Cells[n - 1][2] == "red":
-                    b += 0.1
-                if Cells[n + 1][2] == "red":#on regarde la couleur de chaque parcelle au tour de Cells[n]
-                    b += 0.1
+                for i in range(n[0] - COTE, n[0] + COTE + 1, COTE):
+                    for j in range(n[1] - COTE, n[1] + COTE + 1, COTE):
+                        if (i // 20) * (j // 20) < (HAUTEUR - 1) * (LARGEUR - 1) / (COTE ** 2) - 1:
+                            if Cells[int((i // COTE) * HAUTEUR / COTE + (j // COTE))][2] == "red":
+                                b += 0.1
+                #on regarde la couleur de chaque parcelle au tour de parcelle n
                 a = rd.random()
                 if a < b:
-                    #une parcelle de forêt prend feu avec la probabilité 0.1 × nf 
-                    Cells_step[n][2] = "red"
-                terrain.create_rectangle(Cells[n][0], Cells[n][1], Cells[n][0]+TAILLE_CARRE, Cells[n][1]+TAILLE_CARRE, fill = Cells_step[n][2])
-            elif Cells[n][2] == "yellow":
-                for m in range(n - 1 - int(HAUTEUR / TAILLE_CARRE), n + 2 - int(HAUTEUR / TAILLE_CARRE)):
-                    if Cells[m][2] == "red":
-                        Cells_step[n][2] = "red"
-                for m in range(n - 1 + int(HAUTEUR / TAILLE_CARRE), n + 2 + int(HAUTEUR / TAILLE_CARRE)):
-                    if m < len(Cells):
-                        if Cells[m][2] == "red":
-                            Cells_step[n][2] = "red"
-                if Cells[n - 1][2] == "red":
-                    Cells_step[n][2] = "red"
-                if Cells[n + 1][2] == "red":
-                    Cells_step[n][2] = "red"
-                terrain.create_rectangle(Cells[n][0], Cells[n][1], Cells[n][0]+TAILLE_CARRE, Cells[n][1]+TAILLE_CARRE, fill=Cells_step[n][2])
+                    #une parcelle de forêt prend feu avec la probabilité 0.1 × nf
+                    Cells_step[int(n[0] // COTE * HAUTEUR / COTE + n[1] // COTE)][2] = "red"
+                terrain.create_rectangle(n[0], n[1], n[0]+COTE, n[1]+COTE, fill = n[2])
+            elif n[2] == "yellow":
+                for i in range(n[0] - COTE, n[0] + COTE + 1, COTE):
+                    for j in range(n[1] - COTE, n[1] + COTE + 1, COTE):
+                        if (i // 20) * (j // 20) < (HAUTEUR - 1) * (LARGEUR - 1) / (COTE ** 2) - 1:
+                            if Cells[int((i // COTE) * HAUTEUR / COTE + (j // COTE))][2] == "red":
+                                Cells_step[int(n[0] // COTE * HAUTEUR / COTE + n[1] // COTE)][2] = "red"
+                terrain.create_rectangle(n[0], n[1], n[0]+COTE, n[1]+COTE, fill=Cells_step[int(n[0] // COTE * HAUTEUR / COTE + n[1] // COTE)][2])
     Cells = Cells_step
+
 
 
 def clic_feu(event):
