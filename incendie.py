@@ -76,13 +76,13 @@ def nouvelle_etape(event = None):
             n[3] -= 1
             if n[3] == 0:
                 n[2] = "gray"
-                n[4] = DUREE_CENDRE
+                n[3] = DUREE_CENDRE
                 terrain.create_rectangle(n[0], n[1], n[0]+COTE, n[1]+COTE, fill=n[2])
     #fonction permettant de regarder la valeur DUREE_CENDRE
     for n in Cells_step:
         if n[2] == "gray":
-            n[4] -= 1
-            if n[4] == 0:
+            n[3] -= 1
+            if n[3] == 0:
                 n[2] = "black"
                 terrain.create_rectangle(n[0], n[1], n[0]+COTE, n[1]+COTE, fill=n[2])
             
@@ -112,7 +112,7 @@ def gen_terrain():
 
     for i in range(1, LARGEUR, COTE):
         for j in range(1, HAUTEUR, COTE):
-            Cells.append([i, j, rd.choice(COULEURS), 0, 0])
+            Cells.append([i, j, rd.choice(COULEURS), 0])
     for n in range(len(Cells)):
 
         if Cells[n][2] == "blue":
