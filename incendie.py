@@ -1,4 +1,4 @@
-#########################################
+#########################################                       #il faut que j'arrive à placer le tm.sleep(1) au bon endroit pour que l'on voit le code évoluer au court du temps.
 # groupe DLMP
 # Felix Muller  
 # James Burat
@@ -23,6 +23,10 @@ COTE = 20 #Taille du cote, doit etre un diviseur commun de la largeur  et de la 
 
 # Définition des variables globales
 Cells = []
+nb_feux = None          #nb de case en feux
+delai = 1000            #délai d'attente etre 2 étapes du programme (en ms)
+nb_etapes = 0           #nb d'étapes
+
 
 ### Cells est la liste qui contient les coordonées et la couleur de chaque cellules sous la forme [x, y, "color"]
 ### Cells_step est la liste qu'on utilise pour passer a la prochaine etape
@@ -85,7 +89,6 @@ def nouvelle_etape(event = None):
             if n[3] == 0:
                 n[2] = "black"
                 terrain.create_rectangle(n[0], n[1], n[0]+COTE, n[1]+COTE, fill=n[2])
-            
     Cells = cp.deepcopy(Cells_step)
 
 def clic_feu(event):
@@ -123,6 +126,29 @@ def gen_terrain():
              terrain.create_rectangle(Cells[n][0], Cells[n][1], Cells[n][0]+COTE, Cells[n][1]+COTE, fill="yellow")
 
 
+def etape_enchaine():
+ #fonction qui permet d'enchainer toutes les étapes, jusqu'à ce qu'il ne reste plus une seule parcelle en feu. Le nombre d'étapes et le nombre de parcelle en feux s'affiche également.
+    global nb_etapes
+    compte_case_feux()     
+    if nb_feux == 0:
+        nb_etapes = 0 
+    else:
+        nb_etapes += 1
+        nouvelle_etape(event=None)
+        print("Le programme exécute l'étape", nb_etapes, "du programme.")
+        terrain.after(delai, etape_enchaine) 
+        
+          
+def compte_case_feux(): 
+    #cette fonction permet de compter le nombre de case en feux par étape.
+    global nb_feux
+    nb_feux = 0
+    for n in range(len(Cells)):
+        if Cells[n][2] == "red": 
+            nb_feux += 1
+    print("Il y a", nb_feux, "cases en feu.")
+
+        
 # Programme principal contenant la définition des widgets et des
 # événements qui leur sont liés et l’appel à la boule de gestion des événements
 
@@ -133,7 +159,7 @@ Bouton_terrain = tk.Button(racine, text="Generate Terrain", command=gen_terrain)
 Bouton_save = tk.Button(racine, text="Save")
 Bouton_load = tk.Button(racine, text="Load")
 Bouton_step = tk.Button(racine, text="Step", command=nouvelle_etape)
-Bouton_start = tk.Button(racine, text="Start")
+Bouton_start = tk.Button(racine, text="Start", command=etape_enchaine)
 Bouton_stop = tk.Button(racine, text="Stop")
 Bouton_speedup = tk.Button(racine, text="Speedup")
 Bouton_speeddown = tk.Button(racine, text="Slowdown")
