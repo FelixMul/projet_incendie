@@ -1,4 +1,4 @@
-#########################################                       #il faut que j'arrive à placer le tm.sleep(1) au bon endroit pour que l'on voit le code évoluer au court du temps.
+#########################################
 # groupe DLMP
 # Felix Muller  
 # James Burat
