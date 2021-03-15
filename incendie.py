@@ -7,25 +7,25 @@
 # https://github.com/FelixMul/projet_incendie
 #########################################
 
-#import des librairies
+# import des librairies #
 import tkinter as tk
 import random as rd
 import copy as cp
 
 
-# Définition des constantes
+# Définition des constantes #
 DUREE_FEU = 10
 DUREE_CENDRE = 10
 LARGEUR = 600
 HAUTEUR = 400
 COULEURS = ["blue", "green", "yellow"]
-COTE = 20 #Taille du cote, doit etre un diviseur commun de la largeur  et de la hauteur
+COTE = 20 # Taille du côté, doit être un diviseur commun de la largeur et de la hauteur
 
-# Définition des variables globales
+# Définition des variables globales #
 Cells = []
-nb_feux = None          #nb de case en feux
-delai = 1000            #délai d'attente etre 2 étapes du programme (en ms)
-nb_etapes = 0           #nb d'étapes
+nb_feux = None          # Nombre de case en feux
+delai = 1000            # Délai d'attente entre 2 étapes du programme (en ms)
+nb_etapes = 0           # Nombre d'étapes
 
 
 ### Cells est la liste qui contient les coordonées et la couleur de chaque cellules sous la forme [x, y, "color"]
@@ -36,7 +36,7 @@ def nouvelle_etape(event = None):
     """Fonction permettant de passer a une nouvelle etape"""
     global Cells
     Cells_step = cp.deepcopy(Cells)
-    for n in range(len(Cells)):#les carres de bords ne peuvent pas prendre feu
+    for n in range(len(Cells)):  # Les carrés de bords ne peuvent pas prendre feu
         if n > (HAUTEUR / COTE) and n < ((HAUTEUR // COTE) * (LARGEUR // COTE) - HAUTEUR // COTE) and n % (HAUTEUR / COTE) != 0 and (n + 1) % (HAUTEUR / COTE) != 0: 
             if Cells[n][2] == "green":
                 b = 0
@@ -49,11 +49,11 @@ def nouvelle_etape(event = None):
                             b += 0.1
                 if Cells[n - 1][2] == "red":
                     b += 0.1
-                if Cells[n + 1][2] == "red":#on regarde la couleur de chaque parcelle au tour de Cells[n]
+                if Cells[n + 1][2] == "red":  # On regarde la couleur de chaque parcelle au tour de Cells[n]
                     b += 0.1
                 a = rd.random()
                 if a < b:
-                    #une parcelle de forêt prend feu avec la probabilité 0.1 × nf 
+                    # Une parcelle de forêt prend feu avec la probabilité 0.1 × nf 
                     Cells_step[n][2] = "red"
                     Cells_step[n][3] = DUREE_FEU
                 terrain.create_rectangle(Cells[n][0], Cells[n][1], Cells[n][0]+COTE, Cells[n][1]+COTE, fill = Cells_step[n][2])
@@ -74,7 +74,7 @@ def nouvelle_etape(event = None):
                     Cells_step[n][2] = "red"
                     Cells_step[n][3] = DUREE_FEU
                 terrain.create_rectangle(Cells[n][0], Cells[n][1], Cells[n][0]+COTE, Cells[n][1]+COTE, fill=Cells_step[n][2])
-    #fonction permettant de regarder la valeur DUREE_FEU
+    # Permet de regarder la valeur DUREE_FEU
     for n in Cells_step:
         if n[2] == "red":
             n[3] -= 1
@@ -82,7 +82,7 @@ def nouvelle_etape(event = None):
                 n[2] = "gray"
                 n[3] = DUREE_CENDRE
                 terrain.create_rectangle(n[0], n[1], n[0]+COTE, n[1]+COTE, fill=n[2])
-    #fonction permettant de regarder la valeur DUREE_CENDRE
+    # Permet de regarder la valeur DUREE_CENDRE
     for n in Cells_step:
         if n[2] == "gray":
             n[3] -= 1
@@ -149,8 +149,8 @@ def compte_case_feux():
     print("Il y a", nb_feux, "cases en feu.")
 
         
-# Programme principal contenant la définition des widgets et des
-# événements qui leur sont liés et l’appel à la boule de gestion des événements
+### Programme principal contenant la définition des widgets et des événements ###
+### qui leur sont liés et l’appel à la boule de gestion des événements.       ###
 
 racine = tk.Tk()
 racine.title("Propagation d'un incendie")
