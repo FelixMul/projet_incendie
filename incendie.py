@@ -33,7 +33,7 @@ nb_etapes = 0           #nb d'étapes
 
 # Définition des fonctions
 def nouvelle_etape(event = None):
-    # Fonction permettant de passer a une nouvelle etape
+    """Fonction permettant de passer a une nouvelle etape"""
     global Cells
     Cells_step = cp.deepcopy(Cells)
     for n in range(len(Cells)):#les carres de bords ne peuvent pas prendre feu
@@ -127,7 +127,7 @@ def gen_terrain():
 
 
 def etape_enchaine():
- #fonction qui permet d'enchainer toutes les étapes, jusqu'à ce qu'il ne reste plus une seule parcelle en feu. Le nombre d'étapes et le nombre de parcelle en feux s'affiche également.
+    """Fonction qui permet d'enchainer toutes les étapes, jusqu'à ce qu'il ne reste plus une seule parcelle en feu. Le nombre d'étapes et le nombre de parcelle en feux s'affiche également."""
     global nb_etapes
     compte_case_feux()     
     if nb_feux == 0:
@@ -140,7 +140,7 @@ def etape_enchaine():
         
           
 def compte_case_feux(): 
-    #cette fonction permet de compter le nombre de case en feux par étape.
+    """Cette fonction permet de compter le nombre de case en feux par étape."""
     global nb_feux
     nb_feux = 0
     for n in range(len(Cells)):
