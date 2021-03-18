@@ -40,13 +40,11 @@ def nouvelle_etape(event = None):
         if n > (HAUTEUR / COTE) and n < ((HAUTEUR // COTE) * (LARGEUR // COTE) - HAUTEUR // COTE) and n % (HAUTEUR / COTE) != 0 and (n + 1) % (HAUTEUR / COTE) != 0: 
             if Cells[n][2] == "green":
                 b = 0
-                for m in range(n - 1 - int(HAUTEUR / COTE), n + 2 - int(HAUTEUR / COTE)):
-                    if Cells[m][2] == "red":
+                if Cells[n - int(HAUTEUR / COTE)][2] == "red":
                         b += 0.1
-                for m in range(n - 1 + int(HAUTEUR / COTE), n + 2 + int(HAUTEUR / COTE)):
-                    if m < len(Cells):
-                        if Cells[m][2] == "red":
-                            b += 0.1
+                if n + int(HAUTEUR / COTE) < len(Cells):
+                    if Cells[n + int(HAUTEUR / COTE)][2] == "red":
+                        b += 0.1
                 if Cells[n - 1][2] == "red":
                     b += 0.1
                 if Cells[n + 1][2] == "red":  # On regarde la couleur de chaque parcelle au tour de Cells[n]
@@ -58,15 +56,13 @@ def nouvelle_etape(event = None):
                     Cells_step[n][3] = DUREE_FEU
                 terrain.create_rectangle(Cells[n][0], Cells[n][1], Cells[n][0]+COTE, Cells[n][1]+COTE, fill = Cells_step[n][2])
             elif Cells[n][2] == "yellow":
-                for m in range(n - 1 - int(HAUTEUR / COTE), n + 2 - int(HAUTEUR / COTE)):
-                    if Cells[m][2] == "red":
+                if Cells[n - int(HAUTEUR / COTE)][2] == "red":
+                    Cells_step[n][2] = "red"
+                    Cells_step[n][3] = DUREE_FEU
+                if n + int(HAUTEUR / COTE) < len(Cells):
+                    if Cells[n + int(HAUTEUR / COTE)][2] == "red":
                         Cells_step[n][2] = "red"
                         Cells_step[n][3] = DUREE_FEU
-                for m in range(n - 1 + int(HAUTEUR / COTE), n + 2 + int(HAUTEUR / COTE)):
-                    if m < len(Cells):
-                        if Cells[m][2] == "red":
-                            Cells_step[n][2] = "red"
-                            Cells_step[n][3] = DUREE_FEU
                 if Cells[n - 1][2] == "red":
                     Cells_step[n][2] = "red"
                     Cells_step[n][3] = DUREE_FEU
