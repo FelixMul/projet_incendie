@@ -26,7 +26,7 @@ Cells = []
 nb_feux = None          # Nombre de case en feux
 delai = 1000            # Délai d'attente entre 2 étapes du programme (en ms)
 nb_etapes = 0           # Nombre d'étapes
-
+pause = True        
 
 ### Cells est la liste qui contient les coordonées et la couleur de chaque cellules sous la forme [x, y, "color"]
 ### Cells_step est la liste qu'on utilise pour passer a la prochaine etape
@@ -124,19 +124,24 @@ def gen_terrain():
 
 def etape_enchaine():
     """Fonction qui permet d'enchainer toutes les étapes, jusqu'à ce qu'il ne reste plus une seule parcelle en feu. Le nombre d'étapes et le nombre de parcelle en feux s'affiche également."""
+      
     global nb_etapes
-    compte_case_feux()     
-    if nb_feux == 0:
-        nb_etapes = 0 
-    else:
-        nb_etapes += 1
-        nouvelle_etape(event=None)
-        print("Le programme exécute l'étape", nb_etapes, "du programme.")
-        terrain.after(delai, etape_enchaine) 
+    
+    if pause == True :
+        
+        compte_case_feux()     
+        if nb_feux == 0:
+            nb_etapes = 0 
+        else:
+            nb_etapes += 1
+            nouvelle_etape(event=None)
+            print("Le programme exécute l'étape", nb_etapes, "du programme.")
+            terrain.after(delai, etape_enchaine) 
         
           
 def compte_case_feux(): 
     """Cette fonction permet de compter le nombre de case en feux par étape."""
+   
     global nb_feux
     nb_feux = 0
     for n in range(len(Cells)):
@@ -144,7 +149,16 @@ def compte_case_feux():
             nb_feux += 1
     print("Il y a", nb_feux, "cases en feu.")
 
-        
+
+def arret_simulation():
+    global pause
+    pause = not(pause)
+    if pause == True :
+        etape_enchaine()
+        Bouton_stop.config(text="Stop")
+    else :
+        Bouton_stop.config(text="Continue")
+    
 ### Programme principal contenant la définition des widgets et des événements ###
 ### qui leur sont liés et l’appel à la boule de gestion des événements.       ###
 
@@ -156,9 +170,17 @@ Bouton_save = tk.Button(racine, text="Save")
 Bouton_load = tk.Button(racine, text="Load")
 Bouton_step = tk.Button(racine, text="Step", command=nouvelle_etape)
 Bouton_start = tk.Button(racine, text="Start", command=etape_enchaine)
-Bouton_stop = tk.Button(racine, text="Stop")
+
+
+
+
+Bouton_stop = tk.Button(racine, text="Stop", command=arret_simulation)
+
+
+
 Bouton_speedup = tk.Button(racine, text="Speedup")
 Bouton_speeddown = tk.Button(racine, text="Slowdown")
+
 
 terrain.bind('<Button-1>', clic_feu)
 racine.bind('<space>', nouvelle_etape)
